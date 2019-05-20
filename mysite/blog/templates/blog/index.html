@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    {% for article in articles %}
+        <div class="card darken-1">
+            <div class="card-content grey-text text-darken-2">
+                <span class="card-title">
+                    <a href="{% url 'blog:article' article.id %}" class="article_title">{{ article.title }}</a>
+                </span>
+                <p class="article_created_date">
+                    <i class="material-icons access_time_icon">access_time</i>
+                    <span class="access_time">{{ article.created_date|date:"Y-m-d" }}</span>
+                </p>
+                {% for category in article.category_list %}
+                    <a href="{% url 'blog:category' category %}" class="sidebar_link">
+                        <div class="chip">{{ category }}</div>
+                    </a>
+                {% endfor %}
+                <br>
+                <br>
+                <p class="article_body">{{ article.body | truncatechars:300 | safe}}</p>
+                </br>
+                <a href="{% url 'blog:article' article.id %}" class="sidebar_link">もっと見る</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if articles.paginator.num_pages > 1 %}
+        <div class="pagenation_area">
+            <ul class="pagination">
+                {% if articles.has_previous %}
+                    <li class="waves-effect"><a href="?page={{ articles.previous_page_number }}" class="active_next"><i class="material-icons">chevron_left</i></a></li>
+                {% else %}
+                    <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"><i class="material-icons">chevron_left</i></div></li>
+                {% endif %}
+                {% for link_page in articles.paginator.page_range %}
+                    {% if link_page %}
+                        {% if link_page == articles.number %}
+                            <li class="active"><a href="?page={{ link_page }}">{{ link_page }}</a></li>
+                        {% else %}
+                            <li><a class="" href="?page={{ link_page }}">{{ link_page }}</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li class="disabled">・・・</li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if articles.has_next %}
+                    <li class="waves-effect"><a href="?page={{ articles.next_page_number }}" class="active_next"><i class="material-icons">chevron_right</i></a></li>
+                {% else %}
+                    <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"><i class="material-icons">chevron_right</i></div></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}

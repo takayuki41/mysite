@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ block.super }} | {{ article.title }}{% endblock title %}
+
+{% block content %}
+    <div class="card darken-1">
+        <div class="card-content grey-text text-darken-2">
+            <span class="card-title">
+                <a href="{% url 'blog:article' article.id %}" class="article_title">{{ article.title }}</a>
+            </span>
+            <p class="article_created_date">
+                <i class="material-icons access_time_icon">access_time</i>
+                <span class="access_time">{{ article.created_date|date:"Y-m-d" }}</span>
+            </p>
+            {% for category in article.category_list %}
+                <a href="{% url 'blog:category' category %}" class="sidebar_link">
+                    <div class="chip">{{ category }}</div>
+                </a>
+            {% endfor %}
+            <br>
+            <br>
+            <p class="article_body">{{ article.body | safe}}</p>
+        </div>
+    </div>
+    <div class="home_link_area">
+        <a href="/" class="home_link"><i class="material-icons home_icon">home</i>HOME</a>
+    </div>
+{% endblock %}

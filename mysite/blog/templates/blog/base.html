@@ -1,0 +1,100 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}クソみたいな技術ブログ{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static '/css/materialize.min.css' %}" media="screen,projection"/>
+        <link rel="stylesheet" type="text/css" href="{% static '/css/custom.css' %}" media="screen,projection"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="icon" href="{% static '/image/uchida_takayuki_profile.ico' %}">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/zenburn.css' %}">
+    </head>
+
+    <body class="body_style">
+        <script type="text/javascript" src="{% static '/js/jquery-2.1.1.min.js' %}"></script>
+        <script type="text/javascript" src="{% static '/js/materialize.min.js' %}"></script>
+        <script type="text/javascript" src="{% static '/js/highlight.pack.js' %}"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+        <header>
+            <a href="/">
+                <h1 class="blog_name">クソみたいな技術ブログ</h1>
+            </a>
+        </header>
+
+        <div class="row">
+            <form class="col s12" method="get" action="" name="">
+                <div class="row"prefix>
+                    <div class="input-field col l9 s12">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                    <div class="input-field col l3 s12">
+                        <div class="card darken-1">
+                            <div class="card-content grey-text text-darken-2">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">search</i>
+                                    <input id="search" type="text" class="validate" name="q">
+                                    <label for="search">Search</label>
+                                </div>
+
+                                </br>
+                                <p class="sidebar_title">Profile</p>
+                                <img src="{% static 'image/uchida_takayuki_profile.jpg' %}" class="admin_image" alt="Uchida Takayuki image">
+                                <div class="admin_name">ウチダタカユキ</div>
+                                <div class="admin_profile">Webプログラマーとして都内で働いています。趣味は散歩と読書です。</div>
+                                <span class="icon_span">
+                                    <a href="https://github.com/UchidaTakayuki"><img src="{% static 'image/GitHub-Mark-120px-plus.png' %}"  alt="GitHub icon" class="social_icon"></a>
+                                </span>
+                                <span class="icon_span">
+                                    <a href="https://twitter.com/takuchida_dev"><img src="{% static 'image/Twitter_Social_Icon_Rounded_Square_Color.png' %}" alt="Twitter icon" class="social_icon"></a>
+                                </span>
+                                <span class="icon_span">
+                                    <a href="https://qiita.com/takuchida_dev"><img src="{% static 'image/qiita-square.png' %}" alt="Qiita icon" class="social_icon"></a>
+                                </span>
+                                <span class="icon_span">
+                                    <a href="https://www.instagram.com/takuchida.dev/"><img src="{% static 'image/glyph-logo_May2016.png' %}" alt="instagram icon" class="social_icon"></a>
+                                </span>
+                                <div class="profile_button_space"></div>
+
+                                </br>
+                                <p class="sidebar_title">Rank in Access</p>
+                                <ul class="sidebar_ul">
+                                {% for rank_article in rank_articles %}
+                                    <li><a href="{% url 'blog:article' rank_article.id %}" class="sidebar_link"><span class="list_lead"></span> {{ rank_article.title }}</a></li>
+                                {% endfor %}
+                                </ul>
+
+                                </br>
+                                <p class="sidebar_title">Category</p>
+                                <ul class="sidebar_ul">
+                                {% for key, value in category_dict.items %}
+                                    <li><a href="{% url 'blog:category' key %}" class="sidebar_link"><span class="list_lead"></span> {{ key }}({{ value }})</a></li>
+                                {% endfor %}
+                                </ul>
+
+                                </br>
+                                <p class="sidebar_title">Archive</p>
+                                <ul class="sidebar_ul">
+                                {% for key, value in archive_dict.items %}
+                                    <li><a href="{% url 'blog:archive' key %}" class="sidebar_link"><span class="list_lead"></span> {{ key }}({{ value }})</a></li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <footer class="">
+            <div class="row">
+                <div class="s12 center">
+                    <span class="ccopyright">Copyright ©2019 クソみたいな技術ブログ All rights reserved.</span>
+                </div>
+          </div>
+        </footer>
+    </body>
+</html>

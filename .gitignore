@@ -1,0 +1,12 @@
+### vscode ###
+.vscode/
+
+### Django ###
+__pycache__/
+*.pyc
+*.egg-info/
+.tox/
+.coverage*
+.pytest_cache/
+psycopg2-binary
+local_settings.py
