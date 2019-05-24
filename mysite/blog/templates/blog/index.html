@@ -17,7 +17,7 @@
                 {% endfor %}
                 <br>
                 <br>
-                <p class="article_body">{{ article.body | truncatechars:300 | safe}}</p>
+                <p class="article_body">{{ article.body | truncatechars_html:300 | safe}}</p>
                 </br>
                 <a href="{% url 'blog:article' article.id %}" class="sidebar_link">もっと見る</a>
             </div>
